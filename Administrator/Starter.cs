@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Starter : MonoBehaviour
+public class Starter
 {
-    // Start is called before the first frame update
-    void Start()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void OnBeforeSceneLoadRuntimeMethod()
     {
-        
+        // Debug.Log("Before first Scene loaded");
+
     }
 
-    // Update is called once per frame
-    void Update()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    static void OnAfterSceneLoadRuntimeMethod()
     {
-        
+        // Debug.Log("After first Scene loaded");
+        Map.Instance.InitializeMap();
+    }
+
+    [RuntimeInitializeOnLoadMethod]
+    static void OnRuntimeMethodLoad()
+    {
+        // Debug.Log("RuntimeMethodLoad: After first Scene loaded");
+
     }
 }
