@@ -14,6 +14,7 @@ public partial class Character : MapObject
 {
     // [public]
 
+
     // [private]
     private CharacterType type;
     string originalSpritePath;
@@ -22,7 +23,24 @@ public partial class Character : MapObject
 
 public partial class Character : MapObject
 {
+    private bool _selected = false;
+    public bool selected
+    {
+        get => _selected;
+        set
+        {
+            _selected = value;
 
+            if (_selected)
+            {
+                this.spritePath = selectedSpritePath;
+            }
+            else
+            {
+                this.spritePath = originalSpritePath;
+            }
+        }
+    }
 }
 
 public partial class Character : MapObject

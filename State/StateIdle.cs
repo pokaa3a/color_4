@@ -2,7 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateIdle : State
+public partial class StateIdle : State
 {
 
+}
+
+public partial class StateIdle : State
+{
+    public override State Click(Vector2Int rc)
+    {
+        Character maybeCharacter = Map.Instance.GetTile(rc).GetObject<Character>();
+        if (maybeCharacter != null)
+        {
+            CharacterManager.Instance.selectedCharacter = maybeCharacter;
+            return stateCharacter;
+        }
+        return null;
+    }
+
+    public override void Enter()
+    {
+
+    }
 }

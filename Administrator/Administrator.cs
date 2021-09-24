@@ -37,5 +37,24 @@ public partial class Administrator
 
 public partial class Administrator
 {
+    public void Initialize()
+    {
+        state.Enter();
+    }
+
+    public void Click(Vector2 xy)
+    {
+        Vector2Int rc = Map.Instance.XYtoRC(xy);
+        if (Map.Instance.InsideMap(rc))
+        {
+            State maybeState = state.Click(rc);
+            if (maybeState != null)
+            {
+                maybeState.Enter();
+                state = maybeState;
+            }
+        }
+    }
+
     private Administrator() { }
 }

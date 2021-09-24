@@ -56,4 +56,11 @@ public partial class State
             stateEnemy = new StateEnemy();
         }
     }
+
+    public virtual State Click(Vector2Int rc)
+    {
+        return null;  // return null means state does not change
+    }
+
+    public virtual void Enter() { }
 }

@@ -15,6 +15,7 @@ public class Starter
     static void OnAfterSceneLoadRuntimeMethod()
     {
         // Debug.Log("After first Scene loaded");
+        Administrator.Instance.Initialize();
         Map.Instance.InitializeMap();
         CharacterManager.Instance.SummonCharacters();
     }

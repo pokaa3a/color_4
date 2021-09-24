@@ -12,6 +12,32 @@ public partial class CharacterManager
 
 public partial class CharacterManager
 {
+    private Character _selectedCharacter = null;
+    public Character selectedCharacter
+    {
+        get => _selectedCharacter;
+        set
+        {
+            if (_selectedCharacter != null && value != null)
+            {
+                if (_selectedCharacter != value)
+                {
+                    _selectedCharacter.selected = false;
+                    value.selected = true;
+                }
+            }
+            else if (_selectedCharacter != null && value == null)
+            {
+                _selectedCharacter.selected = false;
+            }
+            else if (_selectedCharacter == null && value != null)
+            {
+                value.selected = true;
+            }
+            _selectedCharacter = value;
+        }
+    }
+
     // Singleton
     private static CharacterManager _instance;
     public static CharacterManager Instance

@@ -21,17 +21,20 @@ public partial class MapObject
 
 public partial class MapObject
 {
-    private Vector2Int _rc = Vector2Int.zero;
+    private Vector2Int _rc = new Vector2Int(-1, -1);
     public Vector2Int rc
     {
         get => _rc;
         set
         {
-            // Generic method of Tile.RemoveObject
-            var t = typeof(Tile);
-            var m = t.GetMethod("RemoveObject");
-            var g = m.MakeGenericMethod(this.GetType());
-            g.Invoke(Map.Instance.GetTile(_rc), null);
+            if (_rc.x >= 0 && _rc.y >= 0)
+            {
+                // Generic method of Tile.RemoveObject
+                var t = typeof(Tile);
+                var m = t.GetMethod("RemoveObject");
+                var g = m.MakeGenericMethod(this.GetType());
+                g.Invoke(Map.Instance.GetTile(_rc), null);
+            }
 
             _rc = value;
             Map.Instance.GetTile(_rc).InsertObject(this);
