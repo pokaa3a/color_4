@@ -19,6 +19,9 @@ public partial class Character : MapObject
     private CharacterType type;
     string originalSpritePath;
     string selectedSpritePath;
+    private int moveRange = 3;
+    private HashSet<Vector2Int> movableRCs = new HashSet<Vector2Int>();
+    private bool hasMoved = false;
 }
 
 public partial class Character : MapObject
@@ -34,10 +37,12 @@ public partial class Character : MapObject
             if (_selected)
             {
                 this.spritePath = selectedSpritePath;
+                if (!hasMoved) ShowReachableRange();
             }
             else
             {
                 this.spritePath = originalSpritePath;
+                CleanRechableRange();
             }
         }
     }
@@ -74,5 +79,56 @@ public partial class Character : MapObject
                 break;
         }
         spritePath = originalSpritePath;
+    }
+
+    public void ShowReachableRange()
+    {
+        for (int dist = 0; dist <= moveRange; ++dist)
+        {
+            for (int r = -dist; r <= dist; ++r)
+            {
+                int c = dist - Mathf.Abs(r);
+                if (Map.Instance.InsideMap(rc + new Vector2Int(r, c)) &&
+                    Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Character>() == null &&
+                    Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Tower>() == null &&
+                    Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Enemy>() == null)
+                {
+                    Effect e1 = new Effect(rc + new Vector2Int(r, c));
+                    e1.spritePath = SpritePath.Object.Effect.reachable;
+                    movableRCs.Add(rc + new Vector2Int(r, c));
+                }
+                if (c == 0) continue;
+
+                c *= -1;
+                if (Map.Instance.InsideMap(rc + new Vector2Int(r, c)) &&
+                    Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Character>() == null &&
+                    Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Tower>() == null &&
+                    Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Enemy>() == null)
+                {
+                    Effect e2 = new Effect(rc + new Vector2Int(r, c));
+                    e2.spritePath = SpritePath.Object.Effect.reachable;
+                    movableRCs.Add(rc + new Vector2Int(r, c));
+                }
+            }
+        }
+    }
+
+    public void CleanRechableRange()
+    {
+        foreach (Vector2Int tileRc in movableRCs)
+        {
+            Map.Instance.GetTile(tileRc).DestroyObject<Effect>();
+        }
+        movableRCs.Clear();
+    }
+
+    public void MoveTo(Vector2Int dstRc)
+    {
+        if (!hasMoved && movableRCs.Contains(dstRc))
+        {
+            this.rc = dstRc;
+            CleanRechableRange();
+            hasMoved = true;
+        }
     }
 }

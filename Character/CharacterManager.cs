@@ -55,11 +55,6 @@ public partial class CharacterManager
 
 public partial class CharacterManager
 {
-
-}
-
-public partial class CharacterManager
-{
     private CharacterManager()
     {
 

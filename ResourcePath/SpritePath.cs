@@ -24,17 +24,17 @@ public class SpritePath
         }
         public class Enemy
         {
-            public const string minion = "Sprites/object/enemy/minion";
+            public const string minion = "Sprites/mapObject/enemy/minion";
         }
         public class Effect
         {
-            public const string attack = "Sprites/object/effect/attack";
-            public const string attackAttempt = "Sprites/object/effect/attack_attempt";
-            public const string move = "Sprites/object/effect/move";
-            public const string reachable = "Sprites/object/effect/reachable";
+            public const string attack = "Sprites/mapObject/effect/attack";
+            public const string attackAttempt = "Sprites/mapObject/effect/attack_attempt";
+            public const string move = "Sprites/mapObject/effect/move";
+            public const string reachable = "Sprites/mapObject/effect/reachable";
         }
-        public const string tower = "Sprites/object/tower";
-        public const string towerClickable = "Sprites/object/tower_clickable";
+        public const string tower = "Sprites/mapObject/tower";
+        public const string towerClickable = "Sprites/mapObject/tower_clickable";
     }
     public class UI
     {

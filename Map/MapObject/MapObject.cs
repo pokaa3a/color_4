@@ -31,9 +31,14 @@ public partial class MapObject
             {
                 // Generic method of Tile.RemoveObject
                 var t = typeof(Tile);
-                var m = t.GetMethod("RemoveObject");
-                var g = m.MakeGenericMethod(this.GetType());
-                g.Invoke(Map.Instance.GetTile(_rc), null);
+                var getObject = t.GetMethod("GetObject");
+                var genGetObject = getObject.MakeGenericMethod(this.GetType());
+                if (genGetObject.Invoke(Map.Instance.GetTile(_rc), null) == this)
+                {
+                    var removeObject = t.GetMethod("RemoveObject");
+                    var genRemoveObject = removeObject.MakeGenericMethod(this.GetType());
+                    genRemoveObject.Invoke(Map.Instance.GetTile(_rc), null);
+                }
             }
 
             _rc = value;
@@ -120,8 +125,6 @@ public partial class MapObject
         }
         sprRend.sprite = Resources.Load<Sprite>(spritePath);
         // Adjust scale
-        gameObject.transform.localScale = new Vector2(
-            spriteWH.x / sprRend.size.x,
-            spriteWH.y / sprRend.size.y);
+        gameObject.transform.localScale = new Vector2(1.0f, 1.0f);
     }
 }

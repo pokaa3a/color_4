@@ -26,6 +26,10 @@ public partial class StateCharacter : State
                 return stateCharacter;
             }
         }
+
+        CharacterManager.Instance.selectedCharacter.MoveTo(rc);
+
+
         return null;
     }
 
