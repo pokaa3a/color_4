@@ -16,6 +16,7 @@ public class Starter
     {
         // Debug.Log("After first Scene loaded");
         Map.Instance.InitializeMap();
+        CharacterManager.Instance.SummonCharacters();
     }
 
     [RuntimeInitializeOnLoadMethod]

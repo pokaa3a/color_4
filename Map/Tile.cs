@@ -10,6 +10,7 @@ public partial class Tile
 
     // [private]
     private GameObject gameObject;
+    private GameObject spriteObject;
     private Vector2 spriteWH;
     private List<MapObject> objects = new List<MapObject>();
     private TileComponent component;
@@ -55,18 +56,68 @@ public partial class Tile
         gameObject = new GameObject($"tile_{rc.x}_{rc.y}");
         component = gameObject.AddComponent<TileComponent>() as TileComponent;
 
+        spriteObject = new GameObject("sprite-object");
+        spriteObject.transform.SetParent(gameObject.transform);
+
         // Position
         Vector2 xy = Map.Instance.RCtoXY(rc);
         gameObject.transform.position = new Vector3(xy.x, xy.y, 0);
 
         // Sprite
-        gameObject.AddComponent<SpriteRenderer>();
+        spriteObject.AddComponent<SpriteRenderer>();
         this.color = GameColor.Empty;
+    }
+
+    public T GetObject<T>() where T : MapObject, new()
+    {
+        foreach (MapObject obj in objects)
+        {
+            if (obj is T) return (T)obj;
+        }
+        return null;
+    }
+
+    // Create new object
+    public T AddObject<T>() where T : MapObject, new()
+    {
+        T newObject = System.Activator.CreateInstance(typeof(T), rc) as T;
+        InsertObject(newObject);
+        return null;
+    }
+
+    // Insert an existing object
+    public void InsertObject(MapObject obj)
+    {
+        objects.Add(obj);
+        obj.gameObject.transform.parent = this.gameObject.transform;
+        obj.gameObject.transform.localPosition = Vector2.zero;
+
+        obj.SetSpriteSortingOrder(this.gameObject.transform.childCount);
+    }
+
+    // Destroy object
+    public void DestroyObject<T>() where T : MapObject, new()
+    {
+        MapObject obj = (MapObject)GetObject<T>();
+        if (obj == null) return;
+
+        objects.Remove(obj);
+        obj.Destroy();
+    }
+
+    // Remove an object from the tile
+    public T RemoveObject<T>() where T : MapObject, new()
+    {
+        MapObject obj = (MapObject)GetObject<T>();
+        if (obj == null) return null;
+
+        objects.Remove(obj);
+        return (T)obj;
     }
 
     private void SetColor()
     {
-        SpriteRenderer sprRend = gameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
+        SpriteRenderer sprRend = spriteObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
         if (this.color == GameColor.Empty)
         {
             sprRend.sprite = Resources.Load<Sprite>(SpritePath.Tile.empty);

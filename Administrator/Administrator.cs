@@ -12,7 +12,10 @@ public enum GameColor
 
 public partial class Administrator
 {
+    // [public]
     public State state = new StateIdle();
+
+    // [private]
 
 }
 
