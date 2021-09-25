@@ -13,15 +13,19 @@ public enum CharacterType
 public partial class Character : MapObject
 {
     // [public]
+    public List<Skill> skills = new List<Skill>();
 
 
     // [private]
     private CharacterType type;
-    string originalSpritePath;
-    string selectedSpritePath;
+
+    private string originalSpritePath;
+    private string selectedSpritePath;
+
     private int moveRange = 3;
     private HashSet<Vector2Int> movableRCs = new HashSet<Vector2Int>();
     private bool hasMoved = false;
+
 }
 
 public partial class Character : MapObject
@@ -78,6 +82,15 @@ public partial class Character : MapObject
                 Assert.IsTrue(false, "[Character]: Invalid CharacterType");
                 break;
         }
+
+        // Skills
+        SkillAttack skill0 = new SkillAttack();
+        SkillAttackAllSameColor skill1 = new SkillAttackAllSameColor();
+        SkillAttackConnected skill2 = new SkillAttackConnected();
+        skills.Add(skill0);
+        skills.Add(skill1);
+        skills.Add(skill2);
+
         spritePath = originalSpritePath;
     }
 

@@ -18,11 +18,13 @@ public partial class StateCharacter : State
             if (maybeCharacter == CharacterManager.Instance.selectedCharacter)
             {
                 CharacterManager.Instance.selectedCharacter = null;
+                UIManager.Instance.uiSkillHolder.enabled = false;
                 return stateIdle;
             }
             else
             {
                 CharacterManager.Instance.selectedCharacter = maybeCharacter;
+                UIManager.Instance.uiSkillHolder.enabled = false;
                 return stateCharacter;
             }
         }
@@ -35,6 +37,6 @@ public partial class StateCharacter : State
 
     public override void Enter()
     {
-
+        UIManager.Instance.uiSkillHolder.enabled = true;
     }
 }
