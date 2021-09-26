@@ -51,13 +51,13 @@ public partial class StateCharacter : State
 
     public override void Enter()
     {
-        CharacterManager.Instance.selectedCharacter.ShowReachableRange();
+        CharacterManager.Instance.selectedCharacter.ShowMovingAvailableRCs();
         UIManager.Instance.uiSkillHolder.enabled = true;
     }
 
     public override void Exit()
     {
-        CharacterManager.Instance.selectedCharacter.CleanRechableRange();
+        CharacterManager.Instance.selectedCharacter.CleanMovingAvailableRCs();
         UIManager.Instance.uiSkillHolder.enabled = false;
     }
 }

@@ -25,6 +25,7 @@ public partial class Character : MapObject
     private int moveRange = 3;
     private HashSet<Vector2Int> movableRCs = new HashSet<Vector2Int>();
     private bool hasMoved = false;
+    private bool hasUsedSkill = false;
 
 }
 
@@ -58,6 +59,7 @@ public partial class Character : MapObject
     {
         this.type = type;
         this.spriteWH = Map.Instance.tileWH * 0.6f;
+        this.attackable = true;
 
         switch (this.type)
         {
@@ -92,7 +94,7 @@ public partial class Character : MapObject
         spritePath = originalSpritePath;
     }
 
-    public void ShowReachableRange()
+    public void ShowMovingAvailableRCs()
     {
         if (hasMoved) return;
 
@@ -107,7 +109,7 @@ public partial class Character : MapObject
                     Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Enemy>() == null)
                 {
                     Effect e1 = new Effect(rc + new Vector2Int(r, c));
-                    e1.spritePath = SpritePath.Object.Effect.reachable;
+                    e1.spritePath = SpritePath.Object.Effect.slashesGreen;
                     movableRCs.Add(rc + new Vector2Int(r, c));
                 }
                 if (c == 0) continue;
@@ -119,20 +121,33 @@ public partial class Character : MapObject
                     Map.Instance.GetTile(rc + new Vector2Int(r, c)).GetObject<Enemy>() == null)
                 {
                     Effect e2 = new Effect(rc + new Vector2Int(r, c));
-                    e2.spritePath = SpritePath.Object.Effect.reachable;
+                    e2.spritePath = SpritePath.Object.Effect.slashesGreen;
                     movableRCs.Add(rc + new Vector2Int(r, c));
                 }
             }
         }
     }
 
-    public void CleanRechableRange()
+    public void CleanMovingAvailableRCs()
     {
         foreach (Vector2Int tileRc in movableRCs)
         {
+            Assert.IsNotNull(Map.Instance.GetTile(tileRc));
             Map.Instance.GetTile(tileRc).DestroyObject<Effect>();
         }
         movableRCs.Clear();
+    }
+
+    public void ShowSkillAvailableRCs()
+    {
+        if (hasUsedSkill) return;
+
+        SkillManager.Instance.selectedSkill.ShowAvailableRCs();
+    }
+
+    public void CleanSkillAvailableRCs()
+    {
+        SkillManager.Instance.selectedSkill.CleanAvailableRCs();
     }
 
     public void MoveTo(Vector2Int dstRc)
@@ -140,7 +155,7 @@ public partial class Character : MapObject
         if (!hasMoved && movableRCs.Contains(dstRc))
         {
             this.rc = dstRc;
-            CleanRechableRange();
+            CleanMovingAvailableRCs();
             hasMoved = true;
         }
     }

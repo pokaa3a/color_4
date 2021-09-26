@@ -29,9 +29,9 @@ public class SpritePath
         public class Effect
         {
             public const string attack = "Sprites/mapObject/effect/attack";
-            public const string attackAttempt = "Sprites/mapObject/effect/attack_attempt";
-            public const string move = "Sprites/mapObject/effect/move";
-            public const string reachable = "Sprites/mapObject/effect/reachable";
+            public const string slashesRed = "Sprites/mapObject/effect/slashes_red";
+            public const string slashesOrange = "Sprites/mapObject/effect/slashes_orange";
+            public const string slashesGreen = "Sprites/mapObject/effect/slashes_green";
         }
         public const string tower = "Sprites/mapObject/tower";
         public const string towerClickable = "Sprites/mapObject/tower_clickable";

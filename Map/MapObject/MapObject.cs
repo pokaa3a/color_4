@@ -7,15 +7,14 @@ public partial class MapObject
 {
     // [public]
     public GameObject gameObject;
-
+    public bool attackable { get; protected set; } = false;
+    public int life;
 
     // [protected]
     protected MapObjectComponent component;
     protected Vector2 spriteWH;
-
     protected bool hasLife = false;
     protected int maxLife;
-    protected int life;
     protected TextMesh lifeText;
 }
 
@@ -30,15 +29,16 @@ public partial class MapObject
             if (_rc.x >= 0 && _rc.y >= 0)
             {
                 // Generic method of Tile.RemoveObject
-                var t = typeof(Tile);
-                var getObject = t.GetMethod("GetObject");
-                var genGetObject = getObject.MakeGenericMethod(this.GetType());
-                if (genGetObject.Invoke(Map.Instance.GetTile(_rc), null) == this)
-                {
-                    var removeObject = t.GetMethod("RemoveObject");
-                    var genRemoveObject = removeObject.MakeGenericMethod(this.GetType());
-                    genRemoveObject.Invoke(Map.Instance.GetTile(_rc), null);
-                }
+                // var t = typeof(Tile);
+                // var getObject = t.GetMethod("GetObject");
+                // var genGetObject = getObject.MakeGenericMethod(this.GetType());
+                // if (genGetObject.Invoke(Map.Instance.GetTile(_rc), null) == this)
+                // {
+                //     var removeObject = t.GetMethod("RemoveObject");
+                //     var genRemoveObject = removeObject.MakeGenericMethod(this.GetType());
+                //     genRemoveObject.Invoke(Map.Instance.GetTile(_rc), null);
+                // }
+                Map.Instance.GetTile(_rc).RemoveObject(this);
             }
 
             _rc = value;

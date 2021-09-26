@@ -17,9 +17,26 @@ public partial class StateSkill : State
 {
     public override State Click(Vector2Int rc)
     {
+        if (SkillManager.Instance.selectedSkill.Launch(rc))
+        {
+            CharacterManager.Instance.selectedCharacter.CleanSkillAvailableRCs();
+
+            // Skill launched successfully -> change to idle state
+            int selectedSkillId = SkillManager.Instance.selectedSkillId;
+            UIManager.Instance.uiSkillHolder.holders[selectedSkillId].selected = false;
+
+            // TODO: Disable selecting SkillHolder instead of simply disabling
+            UIManager.Instance.uiSkillHolder.enabled = false;
+            SkillManager.Instance.selectedSkillId = -1;
+
+            return stateCharacter;
+        }
+
         Character maybeCharacter = Map.Instance.GetTile(rc).GetObject<Character>();
         if (maybeCharacter != null)
         {
+            CharacterManager.Instance.selectedCharacter.CleanSkillAvailableRCs();
+
             int selectedSkillId = SkillManager.Instance.selectedSkillId;
             UIManager.Instance.uiSkillHolder.holders[selectedSkillId].selected = false;
 
@@ -47,6 +64,8 @@ public partial class StateSkill : State
     {
         if (type == typeof(UISkillHolder))
         {
+            CharacterManager.Instance.selectedCharacter.CleanSkillAvailableRCs();
+
             // Get new selected skill ID
             int selectedSkillId = -1;
             for (int i = 0; i < UIManager.Instance.uiSkillHolder.holders.Count; ++i)
@@ -62,10 +81,12 @@ public partial class StateSkill : State
             // Maybe change state
             if (selectedSkillId == -1)
             {
+                // Click selected skill -> change to character state
                 return stateCharacter;
             }
             if (selectedSkillId != SkillManager.Instance.selectedSkillId)
             {
+                // Click another skill -> change to another skill state
                 return stateSkill;
             }
         }
@@ -85,5 +106,6 @@ public partial class StateSkill : State
                 break;
             }
         }
+        CharacterManager.Instance.selectedCharacter.ShowSkillAvailableRCs();
     }
 }

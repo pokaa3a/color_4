@@ -68,6 +68,12 @@ public partial class Tile
         this.color = GameColor.Empty;
     }
 
+    public bool Contains<T>() where T : MapObject, new()
+    {
+        T maybeT = GetObject<T>();
+        return maybeT != null;
+    }
+
     public T GetObject<T>() where T : MapObject, new()
     {
         foreach (MapObject obj in objects)
@@ -105,6 +111,14 @@ public partial class Tile
         obj.Destroy();
     }
 
+    public void DestroyObject(MapObject obj)
+    {
+        if (!objects.Contains(obj)) return;
+
+        objects.Remove(obj);
+        obj.Destroy();
+    }
+
     // Remove an object from the tile
     public T RemoveObject<T>() where T : MapObject, new()
     {
@@ -113,6 +127,13 @@ public partial class Tile
 
         objects.Remove(obj);
         return (T)obj;
+    }
+
+    public void RemoveObject(MapObject obj)
+    {
+        if (!objects.Contains(obj)) return;
+
+        objects.Remove(obj);
     }
 
     private void SetColor()
