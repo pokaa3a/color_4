@@ -53,6 +53,7 @@ public class SpritePath
             public const string attack = "Sprites/skill/icon/attack";
             public const string attackConnected = "Sprites/skill/icon/attack_connected";
             public const string attackSameColor = "Sprites/skill/icon/attack_same_color";
+            public const string selected = "Sprites/skill/icon/skill_selected";
         }
 
         public class Description

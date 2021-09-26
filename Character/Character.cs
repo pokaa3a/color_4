@@ -41,12 +41,10 @@ public partial class Character : MapObject
             if (_selected)
             {
                 this.spritePath = selectedSpritePath;
-                if (!hasMoved) ShowReachableRange();
             }
             else
             {
                 this.spritePath = originalSpritePath;
-                CleanRechableRange();
             }
         }
     }
@@ -96,6 +94,8 @@ public partial class Character : MapObject
 
     public void ShowReachableRange()
     {
+        if (hasMoved) return;
+
         for (int dist = 0; dist <= moveRange; ++dist)
         {
             for (int r = -dist; r <= dist; ++r)

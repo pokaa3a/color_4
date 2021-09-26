@@ -59,8 +59,15 @@ public partial class State
 
     public virtual State Click(Vector2Int rc)
     {
-        return null;  // return null means state does not change
+        return null;    // return null means state does not change
+    }
+
+    public virtual State UIClick(System.Type type)
+    {
+        return null;    // return null means state does not change
     }
 
     public virtual void Enter() { }
+
+    public virtual void Exit() { }
 }

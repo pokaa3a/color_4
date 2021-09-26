@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,9 +51,19 @@ public partial class Administrator
             State maybeState = state.Click(rc);
             if (maybeState != null)
             {
-                maybeState.Enter();
                 state = maybeState;
+                state.Enter();
             }
+        }
+    }
+
+    public void UIClick(Type type)
+    {
+        State maybeState = state.UIClick(type);
+        if (maybeState != null)
+        {
+            state = maybeState;
+            state.Enter();
         }
     }
 

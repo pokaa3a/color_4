@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public partial class UIObject
 {
     // [public]
 
-    // [private]
-    GameObject gameObject;
-    UIObjectComponent component;
+    // [prptected]
+    protected GameObject gameObject;
+    protected UIObjectComponent component;
 }
 
 public partial class UIObject
@@ -32,17 +33,23 @@ public partial class UIObject
         set
         {
             _enabled = value;
-            if (_enabled) Enable();
-            else Disable();
+            gameObject.SetActive(_enabled);
+            // if (_enabled) Enable();
+            // else Disable();
         }
     }
 }
 
 public partial class UIObject
 {
-    public class UIObjectComponent : MonoBehaviour
+    public class UIObjectComponent : MonoBehaviour, IPointerClickHandler
     {
+        public UIObject uiObject;
 
+        public void OnPointerClick(PointerEventData pointerEventData)
+        {
+            uiObject.Click();
+        }
     }
 }
 
@@ -59,7 +66,10 @@ public partial class UIObject
         var Canvas = GameObject.Find(ObjectPath.canvas);
         gameObject.transform.SetParent(Canvas.transform);
         component = gameObject.AddComponent<UIObjectComponent>() as UIObjectComponent;
+        component.uiObject = this;
     }
+
+    protected virtual void Click() { }
 
     protected void SetSprite()
     {
@@ -78,6 +88,7 @@ public partial class UIObject
         {
             img = gameObject.AddComponent<Image>() as Image;
         }
+
         img.enabled = true;
     }
 

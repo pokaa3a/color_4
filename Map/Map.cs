@@ -77,7 +77,7 @@ public partial class Map
 
     public Vector2Int XYtoRC(Vector2 xy)
     {
-        Assert.IsTrue(InsideMap(xy));
+        if (!InsideMap(xy)) return new Vector2Int(-1, -1);
 
         Func<Vector2, Vector2, Vector2, bool> lineSign = (xy, xy1, xy2) =>
             (xy2.y - xy1.y) * xy.x - (xy2.x - xy1.x) * xy.y +

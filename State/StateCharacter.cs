@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,14 +18,16 @@ public partial class StateCharacter : State
         {
             if (maybeCharacter == CharacterManager.Instance.selectedCharacter)
             {
+                Exit();
                 CharacterManager.Instance.selectedCharacter = null;
-                UIManager.Instance.uiSkillHolder.enabled = false;
+                // UIManager.Instance.uiSkillHolder.enabled = false;
                 return stateIdle;
             }
             else
             {
+                Exit();
                 CharacterManager.Instance.selectedCharacter = maybeCharacter;
-                UIManager.Instance.uiSkillHolder.enabled = false;
+                // UIManager.Instance.uiSkillHolder.enabled = false;
                 return stateCharacter;
             }
         }
@@ -35,8 +38,26 @@ public partial class StateCharacter : State
         return null;
     }
 
+    public override State UIClick(Type type)
+    {
+        if (type == typeof(UISkillHolder))
+        {
+            Exit();
+            return stateSkill;
+        }
+
+        return null;
+    }
+
     public override void Enter()
     {
+        CharacterManager.Instance.selectedCharacter.ShowReachableRange();
         UIManager.Instance.uiSkillHolder.enabled = true;
+    }
+
+    public override void Exit()
+    {
+        CharacterManager.Instance.selectedCharacter.CleanRechableRange();
+        UIManager.Instance.uiSkillHolder.enabled = false;
     }
 }
