@@ -18,6 +18,7 @@ public class Starter
         Administrator.Instance.Initialize();
         Map.Instance.InitializeMap();
         CharacterManager.Instance.SummonCharacters();
+        EnemyManager.Instance.SummonEnemies();
         UIManager.Instance.InitiateUIObjects();
     }
 

@@ -228,7 +228,7 @@ public partial class Map
             yield return new WaitForSeconds(0.1f);
             GetTile(rc).color = GameColor.Empty;
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         RefillTiles();
     }
 }

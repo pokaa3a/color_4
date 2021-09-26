@@ -55,11 +55,6 @@ public partial class CharacterManager
 
 public partial class CharacterManager
 {
-    private CharacterManager()
-    {
-
-    }
-
     public void SummonCharacters()
     {
         Character square = new Character(new Vector2Int(0, 0), CharacterType.Square);
@@ -69,4 +64,6 @@ public partial class CharacterManager
         characters.Add(circle);
         characters.Add(triangle);
     }
+
+    private CharacterManager() { }
 }
