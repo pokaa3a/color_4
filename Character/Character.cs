@@ -61,6 +61,10 @@ public partial class Character : MapObject
         this.spriteWH = Map.Instance.tileWH * 0.6f;
         this.attackable = true;
 
+        SetUpLifeText(new Color32(0, 255, 0, 255));
+        this.maxLife = 100;
+        this.life = 100;
+
         switch (this.type)
         {
             case CharacterType.Circle:

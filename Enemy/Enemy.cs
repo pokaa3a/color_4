@@ -24,6 +24,10 @@ public partial class Enemy : MapObject
         this.type = type;
         this.spriteWH = Map.Instance.tileWH * 0.6f;
 
+        SetUpLifeText(new Color32(255, 0, 0, 255));
+        this.maxLife = 100;
+        this.life = 100;
+
         switch (this.type)
         {
             case EnemyType.Minion:

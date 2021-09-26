@@ -8,7 +8,6 @@ public partial class MapObject
     // [public]
     public GameObject gameObject;
     public bool attackable { get; protected set; } = false;
-    public int life;
 
     // [protected]
     protected MapObjectComponent component;
@@ -20,6 +19,17 @@ public partial class MapObject
 
 public partial class MapObject
 {
+    private int _life;
+    public int life
+    {
+        get => _life;
+        set
+        {
+            _life = value;
+            lifeText.text = $"{_life}/{maxLife}";
+        }
+    }
+
     private Vector2Int _rc = new Vector2Int(-1, -1);
     public Vector2Int rc
     {
@@ -94,6 +104,19 @@ public partial class MapObject
 
         this.rc = rc;
         this.spriteWH = Map.Instance.tileWH;
+    }
+
+    protected void SetUpLifeText(Color32 color)
+    {
+        GameObject textObject = new GameObject("LifeText");
+        textObject.transform.SetParent(this.gameObject.transform);
+        lifeText = textObject.AddComponent<TextMesh>() as TextMesh;
+        textObject.transform.localPosition = new Vector2(0f, 0.8f);
+        textObject.transform.localScale = new Vector2(0.04f, 0.08f);
+        lifeText.fontSize = 100;
+        lifeText.text = $"{life}/{maxLife}";
+        lifeText.anchor = TextAnchor.MiddleCenter;
+        lifeText.color = color;
     }
 
     public void StartCoroutine(IEnumerator iEnum)
