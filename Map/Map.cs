@@ -61,6 +61,72 @@ public partial class Map
                 tiles.Add(new Tile(new Vector2Int(r, c)));
             }
         }
+        RefillTiles();
+    }
+
+    public void RefillTiles()
+    {
+        for (int r = 0; r < rows; ++r)
+        {
+            for (int c = 0; c < rows; ++c)
+            {
+                Vector2Int rc = new Vector2Int(r, c);
+                Tile tile = GetTile(rc);
+                if (tile.color == GameColor.Empty)
+                {
+                    int nextColor = UnityEngine.Random.Range(0, 3);
+                    switch (nextColor)
+                    {
+                        case 0:
+                            tile.color = GameColor.Red;
+                            break;
+                        case 1:
+                            tile.color = GameColor.Blue;
+                            break;
+                        case 2:
+                            tile.color = GameColor.Yellow;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    public int ConsumeTiles(Vector2Int rc)
+    {
+        // BFS
+        Vector2Int[] directions = {
+            Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right};
+        GameColor selectedColor = GetTile(rc).color;
+        Queue<Vector2Int> queue = new Queue<Vector2Int>();
+        HashSet<Vector2Int> consumed = new HashSet<Vector2Int>();
+        queue.Enqueue(rc);
+        consumed.Add(rc);
+        while (queue.Count > 0)
+        {
+            int qCount = queue.Count;
+            for (int i = 0; i < qCount; ++i)
+            {
+                Vector2Int curRc = queue.Dequeue();
+                foreach (Vector2Int d in directions)
+                {
+                    Vector2Int nextRc = curRc + d;
+                    if (InsideMap(nextRc) &&
+                        GetTile(nextRc).color == selectedColor &&
+                        !consumed.Contains(nextRc))
+                    {
+                        queue.Enqueue(nextRc);
+                        consumed.Add(nextRc);
+                    }
+                }
+            }
+        }
+
+        // Play animation of consuming tiles
+        CoroutineRunner.RunCoroutine(ConsumeTilesCoroutine(consumed));
+        return consumed.Count;
     }
 
     public bool InsideMap(Vector2 xy)
@@ -152,5 +218,17 @@ public partial class Map
         xyS = new Vector2(xC, yS);
         xyW = new Vector2(xW, yC);
         xyE = new Vector2(xE, yC);
+    }
+
+    // yield can't be used in lambda function...
+    private IEnumerator ConsumeTilesCoroutine(HashSet<Vector2Int> RCs)
+    {
+        foreach (Vector2Int rc in RCs)
+        {
+            yield return new WaitForSeconds(0.1f);
+            GetTile(rc).color = GameColor.Empty;
+        }
+        yield return new WaitForSeconds(0.2f);
+        RefillTiles();
     }
 }
