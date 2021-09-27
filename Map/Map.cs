@@ -74,7 +74,7 @@ public partial class Map
                 Tile tile = GetTile(rc);
                 if (tile.color == GameColor.Empty)
                 {
-                    int nextColor = UnityEngine.Random.Range(0, 3);
+                    int nextColor = UnityEngine.Random.Range(0, GameConst.numColors);
                     switch (nextColor)
                     {
                         case 0:
@@ -85,6 +85,9 @@ public partial class Map
                             break;
                         case 2:
                             tile.color = GameColor.Yellow;
+                            break;
+                        case 3:
+                            tile.color = GameColor.Green;
                             break;
                         default:
                             break;

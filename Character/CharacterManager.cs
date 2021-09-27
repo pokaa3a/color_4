@@ -65,5 +65,15 @@ public partial class CharacterManager
         characters.Add(triangle);
     }
 
+    // Called when player's turn starts
+    public void ResetCharacters()
+    {
+        foreach (Character character in characters)
+        {
+            character.hasMoved = false;
+            character.hasUsedSkill = false;
+        }
+    }
+
     private CharacterManager() { }
 }

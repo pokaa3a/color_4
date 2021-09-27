@@ -14,18 +14,16 @@ public partial class Character : MapObject
 {
     // [public]
     public List<Skill> skills = new List<Skill>();
+    public bool hasMoved = false;
+    public bool hasUsedSkill = false;
 
 
     // [private]
     private CharacterType type;
-
     private string originalSpritePath;
     private string selectedSpritePath;
-
     private int moveRange = 3;
     private HashSet<Vector2Int> movableRCs = new HashSet<Vector2Int>();
-    private bool hasMoved = false;
-    private bool hasUsedSkill = false;
 
 }
 

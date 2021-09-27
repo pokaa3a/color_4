@@ -9,12 +9,10 @@ public partial class Action
         if (!Map.Instance.InsideMap(rc)) return;
 
         Character maybeCharacter = Map.Instance.GetTile(rc).GetObject<Character>();
-        if (maybeCharacter != null)
-        {
-            maybeCharacter.life -= amount;
-        }
+        if (maybeCharacter != null) maybeCharacter.life -= amount;
 
-        // TODO: attack other types of objects
+        Enemy maybeEnemy = Map.Instance.GetTile(rc).GetObject<Enemy>();
+        if (maybeEnemy != null) maybeEnemy.life -= amount;
 
         CoroutineRunner.RunCoroutine(AttackCoroutine(rc));
     }

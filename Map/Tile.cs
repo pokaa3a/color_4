@@ -160,6 +160,10 @@ public partial class Tile
         {
             sprRend.sprite = Resources.Load<Sprite>(SpritePath.Tile.blue);
         }
+        else if (this.color == GameColor.Green)
+        {
+            sprRend.sprite = Resources.Load<Sprite>(SpritePath.Tile.green);
+        }
         else
         {
             Assert.IsTrue(false, "Invalid tile color");

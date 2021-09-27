@@ -8,7 +8,8 @@ public enum GameColor
     Empty,
     Red,
     Blue,
-    Yellow
+    Yellow,
+    Green
 };
 
 public partial class Administrator

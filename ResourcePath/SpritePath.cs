@@ -10,6 +10,7 @@ public class SpritePath
         public const string red = "Sprites/tile/tile_red";
         public const string yellow = "Sprites/tile/tile_yellow";
         public const string blue = "Sprites/tile/tile_blue";
+        public const string green = "Sprites/tile/tile_green";
     }
     public class Object
     {

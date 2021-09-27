@@ -27,5 +27,7 @@ public partial class StateEnemy : State
     {
         UIManager.Instance.uiEndTurn.spritePath =
             SpritePath.UI.Button.endTurnButtonUnpressed;
+
+        CharacterManager.Instance.ResetCharacters();
     }
 }

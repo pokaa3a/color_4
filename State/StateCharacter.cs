@@ -42,8 +42,17 @@ public partial class StateCharacter : State
     {
         if (type == typeof(UISkillHolder))
         {
+            // Click a skill -> change to skill state
             Exit();
             return stateSkill;
+        }
+
+        if (type == typeof(UIEndTurn))
+        {
+            // Click EndTurn -> change to enemy state
+            Exit();
+            CharacterManager.Instance.selectedCharacter = null;
+            return stateEnemy;
         }
 
         return null;

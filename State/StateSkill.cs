@@ -64,6 +64,8 @@ public partial class StateSkill : State
     {
         if (type == typeof(UISkillHolder))
         {
+            // Click Skill
+
             CharacterManager.Instance.selectedCharacter.CleanSkillAvailableRCs();
 
             // Get new selected skill ID
@@ -89,6 +91,16 @@ public partial class StateSkill : State
                 // Click another skill -> change to another skill state
                 return stateSkill;
             }
+        }
+
+        if (type == typeof(UIEndTurn))
+        {
+            // Click EndTurn
+            CharacterManager.Instance.selectedCharacter.CleanSkillAvailableRCs();
+            CharacterManager.Instance.selectedCharacter = null;
+            SkillManager.Instance.selectedSkillId = -1;
+            UIManager.Instance.uiSkillHolder.enabled = false;
+            return stateEnemy;
         }
 
         return null;
