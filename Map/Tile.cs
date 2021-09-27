@@ -136,6 +136,11 @@ public partial class Tile
         objects.Remove(obj);
     }
 
+    public bool IsEmpty()
+    {
+        return objects.Count == 0;
+    }
+
     private void SetColor()
     {
         SpriteRenderer sprRend = spriteObject.GetComponent<SpriteRenderer>() as SpriteRenderer;

@@ -6,6 +6,7 @@ public partial class UIManager
 {
     // [public]
     public UISkillHolder uiSkillHolder;
+    public UIEndTurn uiEndTurn;
 
     // [private]
 }
@@ -32,10 +33,8 @@ public partial class UIManager
     public void InitiateUIObjects()
     {
         uiSkillHolder = new UISkillHolder();
+        uiEndTurn = new UIEndTurn();
     }
 
-    private UIManager()
-    {
-
-    }
+    private UIManager() { }
 }

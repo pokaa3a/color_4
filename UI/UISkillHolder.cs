@@ -23,6 +23,24 @@ public partial class UISkillHolder
         {
             this.id = id;
 
+            // Set position & size
+            RectTransform rectTransform = this.gameObject.GetComponent<RectTransform>();
+            if (id == 0)
+            {
+                rectTransform.localPosition = new Vector2(640f, -450f);
+                rectTransform.sizeDelta = new Vector2(200f, 200f);
+            }
+            else if (id == 1)
+            {
+                rectTransform.localPosition = new Vector2(930f, -380f);
+                rectTransform.sizeDelta = new Vector2(200f, 200f);
+            }
+            else if (id == 2)
+            {
+                rectTransform.localPosition = new Vector2(1140, -200f);
+                rectTransform.sizeDelta = new Vector2(200f, 200f);
+            }
+
             // New SelectedRing object"
             selectedObject = new GameObject("SelectedRing");
             selectedObject.transform.SetParent(this.gameObject.transform);

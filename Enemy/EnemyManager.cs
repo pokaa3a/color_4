@@ -29,6 +29,21 @@ public partial class EnemyManager
 
 public partial class EnemyManager
 {
+    public void StartTurn()
+    {
+        CoroutineRunner.RunCoroutine(ActionCoroutine());
+    }
+
+    IEnumerator ActionCoroutine()
+    {
+        foreach (Enemy e in enemies)
+        {
+            yield return e.Act();
+            yield return new WaitForSeconds(0.2f);
+        }
+        Administrator.Instance.EnemyTrigger();
+    }
+
     public void SummonEnemies()
     {
         Enemy e0 = new Enemy(new Vector2Int(0, 7), EnemyType.Minion);

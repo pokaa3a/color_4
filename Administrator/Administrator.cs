@@ -67,5 +67,15 @@ public partial class Administrator
         }
     }
 
+    public void EnemyTrigger()
+    {
+        State maybeState = state.EnemyTrigger();
+        if (maybeState != null)
+        {
+            state = maybeState;
+            state.Enter();
+        }
+    }
+
     private Administrator() { }
 }

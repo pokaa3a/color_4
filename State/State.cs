@@ -57,15 +57,14 @@ public partial class State
         }
     }
 
-    public virtual State Click(Vector2Int rc)
-    {
-        return null;    // return null means state does not change
-    }
+    // return null means state does not change
+    public virtual State Click(Vector2Int rc) { return null; }
 
-    public virtual State UIClick(System.Type type)
-    {
-        return null;    // return null means state does not change
-    }
+    // return null means state does not change
+    public virtual State UIClick(System.Type type) { return null; }
+
+    // return null means state does not change
+    public virtual State EnemyTrigger() { return null; }
 
     public virtual void Enter() { }
 

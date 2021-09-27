@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,15 @@ public partial class StateIdle : State
         {
             CharacterManager.Instance.selectedCharacter = maybeCharacter;
             return stateCharacter;
+        }
+        return null;
+    }
+
+    public override State UIClick(Type type)
+    {
+        if (type == typeof(UIEndTurn))
+        {
+            return stateEnemy;
         }
         return null;
     }
