@@ -75,5 +75,10 @@ public partial class CharacterManager
         }
     }
 
+    public void CharacterDie(Character c)
+    {
+        characters.Remove(c);
+    }
+
     private CharacterManager() { }
 }

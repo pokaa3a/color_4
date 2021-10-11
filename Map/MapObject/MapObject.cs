@@ -27,6 +27,8 @@ public partial class MapObject
         {
             _life = value;
             lifeText.text = $"{_life}/{maxLife}";
+
+            if (_life <= 0) Die();
         }
     }
 
@@ -105,6 +107,8 @@ public partial class MapObject
         this.rc = rc;
         this.spriteWH = Map.Instance.tileWH;
     }
+
+    protected virtual void Die() { }
 
     protected void SetUpLifeText(Color32 color)
     {

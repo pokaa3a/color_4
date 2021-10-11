@@ -21,8 +21,8 @@ public partial class SkillAttack : Skill
         if (!availableRCs.Contains(rc)) return false;
 
         Vector2Int characterRc = CharacterManager.Instance.selectedCharacter.rc;
-        Map.Instance.ConsumeTiles(characterRc);
-        Action.Attack(rc, attackAmount);
+        int power = Map.Instance.ConsumeTiles(characterRc);
+        Action.Attack(rc, power);
 
         return true;
     }

@@ -161,4 +161,10 @@ public partial class Character : MapObject
             hasMoved = true;
         }
     }
+
+    protected override void Die()
+    {
+        CharacterManager.Instance.CharacterDie(this);
+        this.Destroy();
+    }
 }

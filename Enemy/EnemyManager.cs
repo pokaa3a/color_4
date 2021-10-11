@@ -52,5 +52,10 @@ public partial class EnemyManager
         enemies.Add(e1);
     }
 
+    public void EnemyDie(Enemy e)
+    {
+        enemies.Remove(e);
+    }
+
     private EnemyManager() { }
 }

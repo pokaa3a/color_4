@@ -116,4 +116,10 @@ public partial class Enemy : MapObject
 
         return rcMoves;
     }
+
+    protected override void Die()
+    {
+        EnemyManager.Instance.EnemyDie(this);
+        this.Destroy();
+    }
 }
